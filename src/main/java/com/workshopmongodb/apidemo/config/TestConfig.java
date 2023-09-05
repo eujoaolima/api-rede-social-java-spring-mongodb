@@ -1,5 +1,6 @@
 package com.workshopmongodb.apidemo.config;
 
+import com.workshopmongodb.apidemo.dto.AuthorDTO;
 import com.workshopmongodb.apidemo.entity.Post;
 import com.workshopmongodb.apidemo.entity.User;
 import com.workshopmongodb.apidemo.repository.PostRepository;
@@ -33,11 +34,11 @@ public class TestConfig implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Partiu copa do mundo 2026", maria);
-        Post post2 = new Post(null, sdf.parse("23/06/2019"), "Batata", "Batata++", maria);
-
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Partiu copa do mundo 2026", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/06/2019"), "Batata", "Batata++", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
