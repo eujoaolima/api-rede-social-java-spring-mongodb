@@ -26,10 +26,9 @@ public class UserResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<UserDTO>> findById(@PathVariable String id) {
-        Optional<User> list = userService.findById(id);
-        List<UserDTO> listDTO = list.stream().map(UserDTO::new).toList();
-        return ResponseEntity.ok().body(listDTO);
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(obj));
     }
 
     @PostMapping
@@ -47,6 +46,14 @@ public class UserResource {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id) {
+        User obj = userService.fromDTO(objDTO);
+        obj.setId(id);
+        obj = userService.update(obj);
         return ResponseEntity.noContent().build();
     }
 }
