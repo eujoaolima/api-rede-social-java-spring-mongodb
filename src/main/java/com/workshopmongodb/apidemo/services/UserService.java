@@ -1,6 +1,7 @@
 package com.workshopmongodb.apidemo.services;
 
 
+import com.workshopmongodb.apidemo.dto.UserDTO;
 import com.workshopmongodb.apidemo.entity.User;
 import com.workshopmongodb.apidemo.repository.UserRepository;
 import com.workshopmongodb.apidemo.services.exception.ObjectNotFoundException;
@@ -24,5 +25,13 @@ public class UserService {
             throw new ObjectNotFoundException("User " + id + " not found");
         }
         return user;
+    }
+
+    public User insert(User obj) {
+        return userRepository.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDTO) {
+        return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
     }
 }
